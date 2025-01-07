@@ -49,8 +49,8 @@ emitter.off("dataReceived", dataListener); // Remove a specific listener
 emitter.on("error", (message: string) => console.error("Error:", message));
 emitter.emit("error", "Something went wrong!");
 
-emitter.clearListeners("error"); // Remove all listeners for the "error" event
-emitter.clearListeners(); // Remove all listeners
+emitter.removeListeners("error"); // Remove all listeners for the "error" event
+emitter.removeListeners(); // Remove all listeners
 ```
 
 - **Using the Decorator**
@@ -65,13 +65,13 @@ interface MyEvents {
 const emitter = new EventEmitter<MyEvents>();
 
 class MyClass {
-    @emitEvent("dataReceived", "Data from method", Date.now())
+    @emitEvent("dataReceived", "Data from method", true)
     myMethod() {
         console.log("Method executed");
         return "Method Result";
     }
 
-    @emitEvent("dataReceived", "Data from another method", Date.now() + 1000)
+    @emitEvent("dataReceived", "Data from another method", false)
     anotherMethod(param: number) {
         console.log("Another method executed with param:", param);
         return param * 2;
