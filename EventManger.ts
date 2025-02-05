@@ -17,14 +17,22 @@ export default class EventEmitter<EventMap extends Record<string, Array<any>>>{
         this.listeners[eventName] = listener
     }
 
-    emitEvent<k extends keyof EventMap>(eventName: k, ...arg:EventMap[k] ) {
+    once<k extends keyof EventMap>(eventName: k, callBack: listeners<EventMap[k]>) {
+        const onceWrapper = (...args: EventMap[k]) => {
+            callBack(...args)
+            this.off(eventName)
+        }
+        this.on(eventName, onceWrapper)
+    }
+
+    emit<k extends keyof EventMap>(eventName: k, ...arg:EventMap[k] ) {
         const listeners =  this.listeners[eventName] ?? new Set()
         for(const listener of listeners){
             listener(...arg)
         }
     }
 
-    removeListener<k extends keyof EventMap>(eventName: k){
+    off<k extends keyof EventMap>(eventName: k){
         const cloneListeners = {...this.listeners}
         delete cloneListeners[eventName]
         this.listeners = cloneListeners
@@ -33,7 +41,7 @@ export default class EventEmitter<EventMap extends Record<string, Array<any>>>{
     removeAllListener(){
         const cloneEventNames = Object.getOwnPropertyNames(this.listeners)
         cloneEventNames.forEach((eventName)=>{
-            this.removeListener(eventName)
+            this.off(eventName)
         })
     }
 
@@ -42,21 +50,21 @@ export default class EventEmitter<EventMap extends Record<string, Array<any>>>{
 
 export const eventEmitter = new EventEmitter()
 
-export function emitEvent(params:{eventName: string, eventNameArgs?: any ,immediate?: boolean })  {
+export function emit(params:{eventName: string, eventNameArgs?: any ,immediate?: boolean })  {
     return function(target: any,propertyKey: string,descriptor: PropertyDescriptor) {
         const originalMethod = descriptor.value;
         const {eventName, immediate, eventNameArgs} = params
         descriptor.value = async function(...args: unknown[]) {
            
             if(immediate){
-                eventEmitter.emitEvent(eventName, eventNameArgs)
+                eventEmitter.emit(eventName, eventNameArgs)
                 setTimeout(()=>{
                     originalMethod.apply(this, args)
                 }, 0)
             }else{
                 originalMethod.apply(this, args)
                 setTimeout(()=>{
-                    eventEmitter.emitEvent(eventName, eventNameArgs)
+                    eventEmitter.emit(eventName, eventNameArgs)
 
                 }, 0)
             }
