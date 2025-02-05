@@ -1,4 +1,5 @@
 
+
 export type listeners<T extends Array<any>> = (...arg: T) => void;
 
 
@@ -62,12 +63,12 @@ export function emit(params:{eventName: string, eventNameArgs?: any ,immediate?:
     return function(target: any,propertyKey: string,descriptor: PropertyDescriptor) {
         const originalMethod = descriptor.value;
         const {eventName, immediate, eventNameArgs} = params
-        descriptor.value = async function(...args: unknown[]) {
+        descriptor.value =  function(...args: unknown[]) {
            
             if(immediate){
                 eventEmitter.emit(eventName, eventNameArgs)
                 setTimeout(()=>{
-                    originalMethod.apply(this, args)
+                     originalMethod.apply(this, args)
                 }, 0)
             }else{
                 originalMethod.apply(this, args)
