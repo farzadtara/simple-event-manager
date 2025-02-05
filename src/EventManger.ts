@@ -54,6 +54,11 @@ export default class EventEmitter<EventMap extends Record<string, Array<any>>>{
         return listeners ? listeners.size : 0;
     }
 
+    hasListeners<k extends keyof EventMap>(eventName: k): boolean {
+        const listenerCounts = this.listenerCount(eventName)
+        return listenerCounts > 0
+    }
+
 
 }
 

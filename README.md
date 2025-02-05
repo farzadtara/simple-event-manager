@@ -55,6 +55,9 @@ console.log(listeners); // Output the set of listeners for the "dataReceived" ev
 const count = emitter.listenerCount("dataReceived");
 console.log(count); // Output the number of listeners for the "dataReceived" event
 
+const hasListeners = emitter.hasListeners("dataReceived");
+console.log(hasListeners); // Output true if there are listeners for the "dataReceived" event
+
 emitter.removeListener("dataReceived", specificListener); // Remove the specific listener
 emitter.emit("dataReceived", "Hello again", Date.now()); // This will not trigger the specific listener
 
