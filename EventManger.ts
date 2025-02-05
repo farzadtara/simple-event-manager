@@ -50,15 +50,15 @@ export function emitEvent(params:{eventName: string, eventNameArgs?: any ,immedi
            
             if(immediate){
                 eventEmitter.emitEvent(eventName, eventNameArgs)
-                window.setImmediate(()=>{
+                setTimeout(()=>{
                     originalMethod.apply(this, args)
-                })
+                }, 0)
             }else{
                 originalMethod.apply(this, args)
-                window.setImmediate(()=>{
+                setTimeout(()=>{
                     eventEmitter.emitEvent(eventName, eventNameArgs)
 
-                })
+                }, 0)
             }
         }
     };
