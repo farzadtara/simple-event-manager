@@ -44,6 +44,14 @@ export default class EventEmitter<EventMap extends Record<string, Array<any>>>{
             this.off(eventName)
         })
     }
+    getListeners<k extends keyof EventMap>(eventName: k): Set<listeners<EventMap[k]>> | undefined {
+        return this.listeners[eventName];
+    }
+
+    listenerCount<k extends keyof EventMap>(eventName: k): number {
+        const listeners = this.listeners[eventName];
+        return listeners ? listeners.size : 0;
+    }
 
 
 }
