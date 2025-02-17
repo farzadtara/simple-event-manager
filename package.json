@@ -1,7 +1,7 @@
 {
   "name": "event_container_ts",
-  "version": "1.0.3",
-  "description": "A simple TypeScript EventEmitter implementation.",
+  "version": "1.0.4",
+  "description": "A simple fast EventEmitter for NodeJs and FrontEnd Projects.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "FARZAD <farzad.tara@gmail.com>",
