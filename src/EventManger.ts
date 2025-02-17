@@ -62,26 +62,4 @@ export default class EventEmitter<EventMap extends Record<string, Array<any>>>{
 
 }
 
-export const eventEmitter = new EventEmitter()
-
-export function emit(params:{eventName: string, eventNameArgs?: any ,immediate?: boolean })  {
-    return function(target: any,propertyKey: string,descriptor: PropertyDescriptor) {
-        const originalMethod = descriptor.value;
-        const {eventName, immediate, eventNameArgs} = params
-        descriptor.value =  function(...args: unknown[]) {
-           
-            if(immediate){
-                eventEmitter.emit(eventName, eventNameArgs)
-                setTimeout(()=>{
-                     originalMethod.apply(this, args)
-                }, 0)
-            }else{
-                originalMethod.apply(this, args)
-                setTimeout(()=>{
-                    eventEmitter.emit(eventName, eventNameArgs)
-
-                }, 0)
-            }
-        }
-    };
-  }
+export const eventManager = new EventEmitter()
