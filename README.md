@@ -7,9 +7,9 @@ A simple TypeScript EventEmitter implementation.
 Install the package using npm or yarn:
 
 ```bash
-npm install eventemitter-ts
+npm i event_container_ts
 # or
-yarn add eventemitter-ts
+yarn add event_container_ts
 ```
 
 ## Basic Example
