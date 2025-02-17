@@ -1,6 +1,6 @@
 {
   "name": "event_container_ts",
-  "version": "1.0.4",
+  "version": "1.0.4.1",
   "description": "A simple fast EventEmitter for NodeJs and FrontEnd Projects.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
